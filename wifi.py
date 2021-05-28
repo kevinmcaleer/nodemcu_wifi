@@ -9,12 +9,13 @@ esp.osdebug(None)
 import gc
 gc.collect()
 
-ssid = 'Apple Network Extreme'
-password = 'bleelady'
-mqtt_server = '192.168.1.152'
+ssid = 'your side'
+password = 'your password'
+mqtt_server = 'your mqtt IP adddress' # Replace with the IP or URI of the MQTT server you use
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = b'notification'
-topic_pub = b'hello'
+topic_sub = b'flag' # This is the topic you want to subscribe to
+topic_pub = b'hello' # This is the topic you want to publish to
+servo_pin = machine.PWM(machine.Pin(4))
 
 last_message = 0
 message_interval = 5
@@ -38,6 +39,9 @@ def sub_cb(topic, msg):
     print((topic, msg))
     if topic == b'notification' and msg == b'received':
         print('ESP received hello message')
+    if topic == b'flag':
+        print("move flag",msg)
+        move_flag(msg)
         
 
 def connect_and_subscribe():
@@ -54,6 +58,13 @@ def restart_reconnect():
     time.sleep(10)
     machine.reset()
     
+def map(x, in_min, in_max, out_min, out_max):
+    return int((x-in_min) * (out_max-out_min) / (in_max - in_min) + out_min)
+
+def move_flag(angle):
+    pulse = map(int(angle), in_min=0 , in_max=180,out_min=10, out_max=1000)
+    servo_pin.duty(pulse)
+
 try:
     client = connect_and_subscribe()
 except OSError as e:

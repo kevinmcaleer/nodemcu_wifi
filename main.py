@@ -1,5 +1,7 @@
 # Connect to wifi
 
+
+
 def sub_cb(topic, msg):
     print((topic, msg))
     if topic == b'notification' and msg == b'received':
