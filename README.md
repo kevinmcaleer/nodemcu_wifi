@@ -8,3 +8,6 @@ Change the wifi SSID and password in boot.py
 
 ## Change the topic
 Change the topic to publish or subscribe to different topics
+
+## Download the STLs from Thingiverse
+https://www.thingiverse.com/thing:4872211
