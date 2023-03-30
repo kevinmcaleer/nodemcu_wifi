@@ -10,7 +10,7 @@ import gc
 gc.collect()
 
 ssid = 'Apple Network Extreme'
-password = 'bleelady'
+password = 'password'
 mqtt_server = '192.168.1.152'
 client_id = ubinascii.hexlify(machine.unique_id())
 topic_sub = b'notification'
